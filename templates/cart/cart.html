@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>Your Cart</h2>
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for item in cart.items.all %}
+
+            <tr>
+
+                <td>
+                    {{ item.product.name }}
+                </td>
+
+                <td>
+
+                     <a href="{% url 'decrease_quantity' item.id %}"
+                         class="btn btn-warning btn-sm">
+        -
+                    </a>
+
+                <span class="mx-2">
+                    {{ item.quantity }}
+             </span>
+
+            <a href="{% url 'increase_quantity' item.id %}"
+            class="btn btn-success btn-sm">
+                +
+            </a>
+
+        </td>
+
+                <td>
+                    ${{ item.product.price }}
+                </td>
+
+                <td>
+                    ${{ item.total_price }}
+                </td>
+                 <td>
+
+            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">
+               Remove
+            </a>
+
+            </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="4">
+                    Cart is empty
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+    <hr>
+
+        <div class="text-end">
+
+            <h4>
+                 Total:
+                 ${{ cart.total_price }}
+            </h4>
+
+        </div>
+
+    <h3>
+        Total: ${{ cart.total_price }}
+    </h3>
+
+</div>
+
+{% endblock %}

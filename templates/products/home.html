@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cambodia Football Store
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+
+<div class="container mt-5">
+
+    <div class="bg-dark text-white p-5 rounded-4 shadow">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+
+                <span class="badge bg-warning text-dark mb-3">
+                    ⚽ Cambodia Football Store
+                </span>
+
+                <h1 class="display-3 fw-bold">
+
+                    Football.
+                    Performance.
+                    Passion.
+
+                </h1>
+
+                <p class="lead">
+
+                    Shop premium football equipment from
+                    Adidas, Nike, Puma, Mizuno, Umbro and Kelme.
+
+                    Discover football boots, jerseys,
+                    footballs, goalkeeper gloves and more.
+
+                </p>
+
+                <a href="{% url 'product_list' %}"
+                   class="btn btn-warning btn-lg me-2">
+
+                    🛒 Shop Now
+
+                </a>
+
+                <a href="#products"
+                   class="btn btn-outline-light btn-lg">
+
+                    Explore Products
+
+                </a>
+
+            </div>
+
+            <div class="col-lg-6 text-center">
+
+                <img
+                    src="https://images.unsplash.com/photo-1574629810360-7efbbe195018"
+                    class="img-fluid rounded-4 shadow"
+                    alt="Football Store">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CATEGORY SECTION -->
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold text-center mb-4">
+
+        ⚽ Shop By Category
+
+    </h2>
+
+    <div class="row g-4">
+
+        {% for category in categories %}
+
+        <div class="col-md-4 col-lg-2">
+
+            <a href="{% url 'category_products' category.id %}"
+               class="text-decoration-none">
+
+                <div class="card shadow-sm border-0 text-center p-4 h-100 category-card">
+
+                    <h3>
+                        ⚽
+                    </h3>
+
+                    <h6 class="mt-2">
+
+                        {{ category.name }}
+
+                    </h6>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- FEATURES -->
+
+<div class="container mt-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 text-center p-4">
+
+                <h1>🚚</h1>
+
+                <h5>
+                    Fast Delivery
+                </h5>
+
+                <p class="text-muted">
+
+                    Nationwide delivery service.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 text-center p-4">
+
+                <h1>🔒</h1>
+
+                <h5>
+                    Secure Payment
+                </h5>
+
+                <p class="text-muted">
+
+                    Safe and secure checkout.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 text-center p-4">
+
+                <h1>⭐</h1>
+
+                <h5>
+                    Premium Quality
+                </h5>
+
+                <p class="text-muted">
+
+                    Genuine football products.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PRODUCTS -->
+
+<div id="products" class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="fw-bold">
+
+            🔥 Latest Products
+
+        </h2>
+
+        <a href="{% url 'product_list' %}"
+           class="btn btn-outline-primary">
+
+            View All
+
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for product in products %}
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card h-100 shadow-sm border-0">
+
+                {% if product.image %}
+
+                <img
+                    src="{{ product.image.url }}"
+                    class="card-img-top"
+                    style="height:250px; object-fit:cover;">
+
+                {% else %}
+
+                <img
+                    src="https://via.placeholder.com/300x250"
+                    class="card-img-top">
+
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+
+                        {{ product.name }}
+
+                    </h5>
+
+                    <p class="text-muted small">
+
+                        {{ product.description|truncatechars:80 }}
+
+                    </p>
+
+                    <h4 class="text-success">
+
+                        ${{ product.price }}
+
+                    </h4>
+
+                    <span class="badge bg-secondary">
+
+                        Stock: {{ product.stock }}
+
+                    </span>
+
+                </div>
+
+                <div class="card-footer bg-white border-0">
+
+                    <a href="{% url 'product_detail' product.id %}"
+                       class="btn btn-outline-dark w-100 mb-2">
+
+                        View Details
+
+                    </a>
+
+                    <a href="{% url 'add_to_cart' product.id %}"
+                       class="btn btn-primary w-100">
+
+                        Add To Cart
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-warning text-center">
+
+                No Products Available
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- CTA -->
+
+<div class="container mt-5 mb-5">
+
+    <div class="bg-primary text-white text-center p-5 rounded-4 shadow">
+
+        <h2 class="fw-bold">
+
+            Ready For Your Next Match?
+
+        </h2>
+
+        <p class="lead">
+
+            Discover football boots, jerseys,
+            balls and training equipment.
+
+        </p>
+
+        <a href="{% url 'product_list' %}"
+           class="btn btn-light btn-lg">
+
+            Browse Products
+
+        </a>
+
+    </div>
+
+</div>
+
+<style>
+
+.category-card{
+    transition:0.3s;
+}
+
+.category-card:hover{
+    transform:translateY(-8px);
+    background:#0d6efd;
+    color:rgba(6, 0, 0, 0);
+}
+
+.card{
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+</style>
+
+{% endblock %}
