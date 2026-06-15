@@ -1,3 +1,5 @@
+from pyexpat.errors import messages
+
 from django.shortcuts import (
     render,
     redirect,
@@ -176,3 +178,34 @@ def cart_view(request):
         'cart/cart.html',
         context
     )
+@login_required
+def checkout(request):
+
+    cart, created = Cart.objects.get_or_create(
+        user=request.user
+    )
+
+    if not cart.items.exists():
+
+        messages.error(
+            request,
+            "Your cart is empty."
+        )
+
+        return redirect('cart_detail')
+
+    for item in cart.items.all():
+
+        if item.product.stock >= item.quantity:
+
+            item.product.stock -= item.quantity
+            item.product.save()
+
+    cart.items.all().delete()
+
+    messages.success(
+        request,
+        "Order placed successfully!"
+    )
+
+    return redirect('home')

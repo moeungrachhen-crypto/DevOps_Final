@@ -1,11 +1,12 @@
 from django.urls import path
-
+from . import views
 from .views import (
     cart_detail,
     add_to_cart,
     remove_from_cart,
     increase_quantity,
     decrease_quantity,
+    
 )
 
 urlpatterns = [
@@ -33,6 +34,11 @@ urlpatterns = [
         'decrease/<int:item_id>/',
         decrease_quantity,
         name='decrease_quantity'
+    ),
+    path(
+        'checkout/',
+        views.checkout,
+        name='checkout'
     ),
 ]
 from django.urls import path
