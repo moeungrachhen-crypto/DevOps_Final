@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="mb-4 fw-bold">
+
+        📊 Admin Dashboard
+
+    </h1>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Products</h5>
+
+                    <h1 class="text-primary">
+
+                        {{ total_products }}
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h5>Categories</h5>
+
+                    <h1 class="text-success">
+
+                        {{ total_categories }}
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h5>Orders</h5>
+
+                    <h1 class="text-warning">
+
+                        {{ total_orders }}
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h5>Users</h5>
+
+                    <h1 class="text-danger">
+
+                        {{ total_users }}
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-5">
+
+        <div class="card-body text-center">
+
+            <h4>Total Revenue</h4>
+
+            <h1 class="text-success">
+
+                ${{ total_revenue }}
+
+            </h1>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
