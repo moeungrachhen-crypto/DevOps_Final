@@ -1,0 +1,77 @@
+name: Django CI
+
+on:
+push:
+branches:
+- main
+
+pull_request:
+branches:
+- main
+
+jobs:
+
+build:
+
+```
+runs-on: ubuntu-latest
+
+strategy:
+  max-parallel: 4
+
+services:
+
+  postgres:
+    image: postgres:16
+
+    env:
+      POSTGRES_DB: ecommerce_db
+      POSTGRES_USER: ecommerce_user
+      POSTGRES_PASSWORD: 123456
+
+    ports:
+      - 5432:5432
+
+    options: >-
+      --health-cmd="pg_isready -U ecommerce_user"
+      --health-interval=10s
+      --health-timeout=5s
+      --health-retries=5
+
+steps:
+
+  - name: Checkout Code
+    uses: actions/checkout@v4
+
+  - name: Setup Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.12"
+
+  - name: Install Dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+
+  - name: Create Environment File
+    run: |
+      echo "DEBUG=True" >> .env
+      echo "SECRET_KEY=test-secret-key" >> .env
+      echo "DB_NAME=ecommerce_db" >> .env
+      echo "DB_USER=ecommerce_user" >> .env
+      echo "DB_PASSWORD=123456" >> .env
+      echo "DB_HOST=localhost" >> .env
+      echo "DB_PORT=5432" >> .env
+
+  - name: Run Migrations
+    run: |
+      python manage.py migrate
+
+  - name: Django System Check
+    run: |
+      python manage.py check
+
+  - name: Run Tests
+    run: |
+      python manage.py test
+```
